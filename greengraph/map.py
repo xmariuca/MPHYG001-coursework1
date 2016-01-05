@@ -1,4 +1,3 @@
-
 import numpy as np
 from StringIO import StringIO
 from matplotlib import image as img
