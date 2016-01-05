@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 #
 # Greengraph documentation build configuration file, created by
-# sphinx-quickstart on Tue Jan  5 15:10:44 2016.
+# sphinx-quickstart on Tue Jan  5 17:27:07 2016.
 #
 # This file is execfile()d with the current directory set to its
 # containing dir.
@@ -19,7 +19,7 @@ import shlex
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
-#sys.path.insert(0, os.path.abspath('.'))
+sys.path.insert(0, os.path.abspath('/Users/ucaHome/Documents/Modules_MRes/PythonCode/Coursework1'))
 
 # -- General configuration ------------------------------------------------
 
@@ -33,6 +33,7 @@ extensions = [
     'sphinx.ext.autodoc',
     'sphinx.ext.coverage',
     'sphinx.ext.mathjax',
+    'sphinx.ext.ifconfig',
     'sphinx.ext.viewcode',
 ]
 

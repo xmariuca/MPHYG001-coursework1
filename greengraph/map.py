@@ -1,9 +1,17 @@
+'''
+.. class:: map
+
+'''
+
 import numpy as np
 from StringIO import StringIO
 from matplotlib import image as img
 import requests
 
 class Map(object):
+    '''
+    This is the Map class.
+    '''
     def __init__(self, lat, long, satellite=True, zoom=10, size=(400,400), sensor=False):
         base="http://maps.googleapis.com/maps/api/staticmap?"
 
