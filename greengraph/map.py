@@ -1,8 +1,3 @@
-'''
-.. class:: map
-
-'''
-
 import numpy as np
 from StringIO import StringIO
 from matplotlib import image as img
@@ -10,7 +5,7 @@ import requests
 
 class Map(object):
     '''
-    This is the Map class.
+    The Map class handles the interaction with Google maps and counts the amount of green pixels in a given image.
     '''
     def __init__(self, lat, long, satellite=True, zoom=10, size=(400,400), sensor=False):
         base="http://maps.googleapis.com/maps/api/staticmap?"
@@ -32,6 +27,9 @@ class Map(object):
         # Parse our PNG image as a numpy array
 
     def green(self, threshold):
+        '''
+        .. method:: Use NumPy to build an element-by-element logical array
+        '''
         # Use NumPy to build an element-by-element logical array
         greener_than_red = self.pixels[:,:,1] > threshold* self.pixels[:,:,0]
         greener_than_blue = self.pixels[:,:,1] > threshold*self.pixels[:,:,2]
@@ -39,9 +37,15 @@ class Map(object):
         return green
 
     def count_green(self, threshold = 1.1):
+        '''
+        .. method:: Count the number of green pixels in the current map
+        '''
         return np.sum(self.green(threshold))
 
     def show_green(data, threshold = 1.1):
+        '''
+        .. method:: Save the green pixels of the current map
+        '''
         green = self.green(threshold)
         out = green[:,:,np.newaxis]*array([0,1,0])[np.newaxis,np.newaxis,:]
         buffer = StringIO()

@@ -1,0 +1,114 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>greengraph.commandLine &mdash; Greengraph 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="Greengraph 0.1 documentation" href="../../index.html" />
+    <link rel="up" title="Module code" href="../index.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for greengraph.commandLine</h1><div class="highlight"><pre>
+<span class="c">#!/usr/bin/env python</span>
+<span class="kn">from</span> <span class="nn">argparse</span> <span class="kn">import</span> <span class="n">ArgumentParser</span>
+<span class="kn">from</span> <span class="nn">graph</span> <span class="kn">import</span> <span class="n">Greengraph</span>
+<span class="kn">from</span> <span class="nn">map</span> <span class="kn">import</span> <span class="n">Map</span>
+<span class="kn">from</span> <span class="nn">getGraph</span> <span class="kn">import</span> <span class="n">plotGreenDistribution</span>
+<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+
+<div class="viewcode-block" id="parseArgs"><a class="viewcode-back" href="../../index.html#greengraph.commandLine.parseArgs">[docs]</a><span class="k">def</span> <span class="nf">parseArgs</span><span class="p">():</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Entry point from the command line.</span>
+
+<span class="sd">    :Example:</span>
+
+<span class="sd">    &gt;&gt;&gt; getGreenGraph --from London --to Cambridge --steps 10 --out outGraph.png</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">prs</span><span class="o">=</span> <span class="n">ArgumentParser</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s">&quot;Greengraph package - Generates a graph with the proportion of green pixels between two locations&quot;</span><span class="p">)</span>
+    <span class="n">prs</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&#39;--from&#39;</span><span class="p">,</span><span class="n">help</span><span class="o">=</span><span class="s">&#39;Start position, default = London&#39;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s">&#39;startPos&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s">&#39;London&#39;</span><span class="p">)</span>
+    <span class="n">prs</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&#39;--to&#39;</span><span class="p">,</span><span class="n">help</span><span class="o">=</span><span class="s">&#39;End position, default = Cambridge&#39;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s">&#39;endPos&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s">&#39;Cambridge&#39;</span><span class="p">)</span>
+    <span class="n">prs</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&#39;--steps&#39;</span><span class="p">,</span><span class="n">help</span><span class="o">=</span><span class="s">&#39;Number of steps between start and end, default = 10&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+    <span class="n">prs</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&#39;--out&#39;</span><span class="p">,</span><span class="n">help</span><span class="o">=</span><span class="s">&#39;Name of output image, default = outGraph.png&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s">&#39;outGraph.png&#39;</span><span class="p">)</span>
+    <span class="n">arguments</span><span class="o">=</span><span class="n">prs</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
+
+    <span class="n">plotGreenDistribution</span><span class="p">(</span><span class="n">arguments</span><span class="o">.</span><span class="n">startPos</span><span class="p">,</span> <span class="n">arguments</span><span class="o">.</span><span class="n">endPos</span><span class="p">,</span> <span class="n">arguments</span><span class="o">.</span><span class="n">steps</span><span class="p">,</span><span class="n">arguments</span><span class="o">.</span><span class="n">out</span><span class="p">)</span></div>
+
+
+<span class="k">if</span> <span class="n">__name__</span><span class="o">==</span><span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">parseArgs</span><span class="p">()</span>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2016, Maria Ruxandra Robu.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.7</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

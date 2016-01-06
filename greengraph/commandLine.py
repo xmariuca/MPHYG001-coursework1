@@ -6,6 +6,13 @@ from getGraph import plotGreenDistribution
 from matplotlib import pyplot as plt
 
 def parseArgs():
+    '''
+    Entry point from the command line.
+
+    :Example:
+
+    >>> getGreenGraph --from London --to Cambridge --steps 10 --out outGraph.png
+    '''
     prs= ArgumentParser(description="Greengraph package - Generates a graph with the proportion of green pixels between two locations")
     prs.add_argument('--from',help='Start position, default = London', dest='startPos', default='London')
     prs.add_argument('--to',help='End position, default = Cambridge', dest='endPos', default='Cambridge')

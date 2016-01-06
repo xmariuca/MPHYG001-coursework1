@@ -6,14 +6,22 @@
 Welcome to Greengraph's documentation!
 ======================================
 
-Contents:
+This package measures how much green space there is between two locations. It outputs a graph with the distribution of green pixels from the discretized distance.
 
-.. toctree::
-   :maxdepth: 3
+The package was created as part of Coursework 1 for the module MPHYG001: Research Software Engineering with Python.
+
+Contents:
+=========
+
+.. autoclass:: greengraph.graph.Greengraph
+	:members:
+
+
+.. autoclass:: greengraph.map.Map
+	:members:
+
 
 .. autofunction:: greengraph.getGraph.plotGreenDistribution
 
-.. autoclass:: greengraph.graph.Greengraph
 
-.. autoclass:: greengraph.map.Map
-
+.. autofunction:: greengraph.commandLine.parseArgs
