@@ -44,12 +44,6 @@ $ getGreenGraph --from London --to Cambridge --steps 10 --out outGraph.png
 
 The package outputs a graph with the distribution of green pixels between the two locations.
 
-Example image:
-
-![Example Greengraph output]
-(https://github.com/xmariuca/MPHYG001-coursework1.git)
-(https://octodex.github.com/images/yaktocat.png)
-
 ### Documentation
 
 The documentation was created using Sphinx. For more information about the code, please see the generated html files.
