@@ -21,9 +21,9 @@ def setup_module(module):
     mapImgB=np.ones((300,300))
 
     # savetxt only works with <2dim arrays
-    np.savetxt("fixtDataRed.csv", mapImgR, delimiter=",")
-    np.savetxt("fixtDataGreen.csv", mapImgG, delimiter=",")
-    np.savetxt("fixtDataBlue.csv", mapImgB, delimiter=",")
+    np.savetxt("greengraph/fixtDataRed.csv", mapImgR, delimiter=",")
+    np.savetxt("greengraph/fixtDataGreen.csv", mapImgG, delimiter=",")
+    np.savetxt("greengraph/fixtDataBlue.csv", mapImgB, delimiter=",")
 
 
 def teardown_module(module):
@@ -33,9 +33,9 @@ def teardown_module(module):
     print('Teardown module')
     ########################
     # # uncomment to delete the fixture data
-    # os.remove('fixtDataRed.csv')
-    # os.remove('fixtDataGreen.csv')
-    # os.remove('fixtDataBlue.csv')
+    # os.remove('greengraph/fixtDataRed.csv')
+    # os.remove('greengraph/fixtDataGreen.csv')
+    # os.remove('greengraph/fixtDataBlue.csv')
 
 
 def test_defaultRequestParam():
@@ -61,9 +61,9 @@ def test_countGreen_nonGreenImg():
     '''
     Test to count the number of green pixels in a photo with no green areas. The image is read from the fixture .csv file created in the setup_module() function.
     '''
-    myDataRed = np.genfromtxt('fixtDataRed.csv', delimiter=',')
-    myDataGreen = np.genfromtxt('fixtDataGreen.csv', delimiter=',')
-    myDataBlue = np.genfromtxt('fixtDataBlue.csv', delimiter=',')
+    myDataRed = np.genfromtxt('greengraph/fixtDataRed.csv', delimiter=',')
+    myDataGreen = np.genfromtxt('greengraph/fixtDataGreen.csv', delimiter=',')
+    myDataBlue = np.genfromtxt('greengraph/fixtDataBlue.csv', delimiter=',')
     mapImg=np.dstack((myDataRed, myDataGreen, myDataBlue))
 
     # create Map object with the test image
