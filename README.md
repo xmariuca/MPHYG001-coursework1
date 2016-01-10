@@ -9,6 +9,8 @@ Greengraph uses some open source Python libraries to perform properly:
 * geopy
 * numpy
 * argparse
+* mock
+* nose
 
 ### Installation
 
