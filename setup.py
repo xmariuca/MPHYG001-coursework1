@@ -8,6 +8,8 @@ setup(
         'argparse',
         'matplotlib',
         'geopy',
-        'numpy'
+        'numpy',
+        'mock',
+        'nose'
         ]
 )
