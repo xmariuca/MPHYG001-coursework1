@@ -43,7 +43,7 @@ def test_defaultRequestParam():
     Test function to check that the http get request is called with the right parameters in the default case.
     '''
     with patch.object(requests,'get') as mock_getRequest:
-        print('mock requests was called')
+        # print('mock requests was called')
         defaultMap= getMapAt(defaultLat,defaultLong)
         params=dict(
             sensor='false',

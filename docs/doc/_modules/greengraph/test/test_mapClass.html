@@ -1,0 +1,179 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>greengraph.test.test_mapClass &mdash; Greengraph 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="Greengraph 0.1 documentation" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for greengraph.test.test_mapClass</h1><div class="highlight"><pre>
+<span class="kn">from</span> <span class="nn">mock</span> <span class="kn">import</span> <span class="n">patch</span>
+<span class="kn">from</span> <span class="nn">mock</span> <span class="kn">import</span> <span class="n">MagicMock</span>
+<span class="kn">import</span> <span class="nn">requests</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">nose.tools</span> <span class="kn">import</span> <span class="n">assert_almost_equal</span>
+<span class="kn">from</span> <span class="nn">greengraph.map</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">defaultLat</span> <span class="o">=</span> <span class="mf">51.5073509</span>
+<span class="n">defaultLong</span> <span class="o">=</span> <span class="o">-</span><span class="mf">0.1277583</span>
+
+<div class="viewcode-block" id="setup_module"><a class="viewcode-back" href="../../../index.html#greengraph.test.test_mapClass.setup_module">[docs]</a><span class="k">def</span> <span class="nf">setup_module</span><span class="p">(</span><span class="n">module</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    This function is the first one to be executed in this module. It creates a synthetic image with no green pixels and saves it in a csv file to be accessed as a fixture in the functions.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">&#39;Setup module&#39;</span><span class="p">)</span>
+
+    <span class="c"># create file with an image with no green pixels</span>
+    <span class="n">mapImgR</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">300</span><span class="p">,</span><span class="mi">300</span><span class="p">))</span>
+    <span class="n">mapImgG</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">300</span><span class="p">,</span><span class="mi">300</span><span class="p">))</span>
+    <span class="n">mapImgB</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">300</span><span class="p">,</span><span class="mi">300</span><span class="p">))</span>
+
+    <span class="c"># savetxt only works with &lt;2dim arrays</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">savetxt</span><span class="p">(</span><span class="s">&quot;greengraph/fixtDataRed.csv&quot;</span><span class="p">,</span> <span class="n">mapImgR</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="s">&quot;,&quot;</span><span class="p">)</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">savetxt</span><span class="p">(</span><span class="s">&quot;greengraph/fixtDataGreen.csv&quot;</span><span class="p">,</span> <span class="n">mapImgG</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="s">&quot;,&quot;</span><span class="p">)</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">savetxt</span><span class="p">(</span><span class="s">&quot;greengraph/fixtDataBlue.csv&quot;</span><span class="p">,</span> <span class="n">mapImgB</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="s">&quot;,&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="teardown_module"><a class="viewcode-back" href="../../../index.html#greengraph.test.test_mapClass.teardown_module">[docs]</a><span class="k">def</span> <span class="nf">teardown_module</span><span class="p">(</span><span class="n">module</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    This function is called after everything else in this module. Its purpose is to close any connections to the internet or a database. In this case, it deletes the .csv files created in the setup_module() function.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">&#39;Teardown module&#39;</span><span class="p">)</span></div>
+    <span class="c">########################</span>
+    <span class="c"># # uncomment to delete the fixture data</span>
+    <span class="c"># os.remove(&#39;greengraph/fixtDataRed.csv&#39;)</span>
+    <span class="c"># os.remove(&#39;greengraph/fixtDataGreen.csv&#39;)</span>
+    <span class="c"># os.remove(&#39;greengraph/fixtDataBlue.csv&#39;)</span>
+
+
+<div class="viewcode-block" id="test_defaultRequestParam"><a class="viewcode-back" href="../../../index.html#greengraph.test.test_mapClass.test_defaultRequestParam">[docs]</a><span class="k">def</span> <span class="nf">test_defaultRequestParam</span><span class="p">():</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Test function to check that the http get request is called with the right parameters in the default case.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">with</span> <span class="n">patch</span><span class="o">.</span><span class="n">object</span><span class="p">(</span><span class="n">requests</span><span class="p">,</span><span class="s">&#39;get&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">mock_getRequest</span><span class="p">:</span>
+        <span class="c"># print(&#39;mock requests was called&#39;)</span>
+        <span class="n">defaultMap</span><span class="o">=</span> <span class="n">getMapAt</span><span class="p">(</span><span class="n">defaultLat</span><span class="p">,</span><span class="n">defaultLong</span><span class="p">)</span>
+        <span class="n">params</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+            <span class="n">sensor</span><span class="o">=</span><span class="s">&#39;false&#39;</span><span class="p">,</span>
+            <span class="n">zoom</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+            <span class="n">size</span><span class="o">=</span><span class="s">&#39;400x400&#39;</span><span class="p">,</span>
+            <span class="n">center</span><span class="o">=</span><span class="s">&quot;,&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="p">(</span><span class="n">defaultLat</span><span class="p">,</span><span class="n">defaultLong</span><span class="p">)</span> <span class="p">)),</span>
+            <span class="n">style</span><span class="o">=</span><span class="s">&#39;feature:all|element:labels|visibility:off&#39;</span>
+            <span class="p">)</span>
+        <span class="n">params</span><span class="p">[</span><span class="s">&quot;maptype&quot;</span><span class="p">]</span><span class="o">=</span><span class="s">&quot;satellite&quot;</span>
+
+        <span class="n">mock_getRequest</span><span class="o">.</span><span class="n">assert_called_with</span><span class="p">(</span>
+        <span class="s">&quot;http://maps.googleapis.com/maps/api/staticmap?&quot;</span><span class="p">,</span><span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="test_countGreen_nonGreenImg"><a class="viewcode-back" href="../../../index.html#greengraph.test.test_mapClass.test_countGreen_nonGreenImg">[docs]</a><span class="k">def</span> <span class="nf">test_countGreen_nonGreenImg</span><span class="p">():</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Test to count the number of green pixels in a photo with no green areas. The image is read from the fixture .csv file created in the setup_module() function.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">myDataRed</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">genfromtxt</span><span class="p">(</span><span class="s">&#39;greengraph/fixtDataRed.csv&#39;</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="s">&#39;,&#39;</span><span class="p">)</span>
+    <span class="n">myDataGreen</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">genfromtxt</span><span class="p">(</span><span class="s">&#39;greengraph/fixtDataGreen.csv&#39;</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="s">&#39;,&#39;</span><span class="p">)</span>
+    <span class="n">myDataBlue</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">genfromtxt</span><span class="p">(</span><span class="s">&#39;greengraph/fixtDataBlue.csv&#39;</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="s">&#39;,&#39;</span><span class="p">)</span>
+    <span class="n">mapImg</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">dstack</span><span class="p">((</span><span class="n">myDataRed</span><span class="p">,</span> <span class="n">myDataGreen</span><span class="p">,</span> <span class="n">myDataBlue</span><span class="p">))</span>
+
+    <span class="c"># create Map object with the test image</span>
+    <span class="n">testMap</span><span class="o">=</span><span class="n">Map</span><span class="p">(</span><span class="n">defaultLat</span><span class="p">,</span><span class="n">defaultLong</span><span class="p">)</span>
+    <span class="n">testMap</span><span class="o">.</span><span class="n">setDummyImage</span><span class="p">(</span><span class="n">mapImg</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">testMap</span><span class="o">.</span><span class="n">count_green</span><span class="p">()))</span>
+    <span class="n">assert_almost_equal</span> <span class="p">(</span><span class="n">testMap</span><span class="o">.</span><span class="n">count_green</span><span class="p">(),</span><span class="mi">0</span><span class="p">,</span><span class="n">delta</span><span class="o">=</span><span class="mf">1e-5</span><span class="p">)</span></div>
+
+
+<span class="c"># @patch(&#39;greengraph.map.Map&#39;)</span>
+<span class="c"># def getMapMock(mockMap):</span>
+<span class="c">#     print(&#39;patch decorator&#39;)</span>
+<span class="c">#     myDataRed = np.genfromtxt(&#39;fixtDataRed.csv&#39;, delimiter=&#39;,&#39;)</span>
+<span class="c">#     myDataGreen = np.genfromtxt(&#39;fixtDataGreen.csv&#39;, delimiter=&#39;,&#39;)</span>
+<span class="c">#     myDataBlue = np.genfromtxt(&#39;fixtDataBlue.csv&#39;, delimiter=&#39;,&#39;)</span>
+<span class="c">#     mapImg=np.dstack((myDataRed, myDataGreen, myDataBlue))</span>
+<span class="c">#</span>
+<span class="c">#     mockMap.pixels=mapImg</span>
+<span class="c">#</span>
+<span class="c">#     numGreenPix=mockMap.count_green()</span>
+<span class="c">#     print(&#39;green pix = &#39;+ str(numGreenPix))</span>
+
+
+<span class="c"># define fixture with a numpy array of 3 green pixels -&gt; test count_green() test that it works with no green pixels and only green pixels</span>
+
+<span class="c"># test save_green with my fixture</span>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2016, Maria Ruxandra Robu.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.7</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

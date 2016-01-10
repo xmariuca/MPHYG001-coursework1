@@ -44,28 +44,34 @@
 <span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">image</span> <span class="k">as</span> <span class="n">img</span>
 <span class="kn">import</span> <span class="nn">requests</span>
 
+<span class="k">def</span> <span class="nf">getMapAt</span><span class="p">(</span><span class="n">lat</span><span class="p">,</span> <span class="nb">long</span><span class="p">,</span> <span class="n">satellite</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">zoom</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">400</span><span class="p">,</span><span class="mi">400</span><span class="p">),</span> <span class="n">sensor</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+    <span class="n">base</span><span class="o">=</span><span class="s">&quot;http://maps.googleapis.com/maps/api/staticmap?&quot;</span>
+    <span class="n">params</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+        <span class="n">sensor</span><span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">sensor</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">(),</span>
+        <span class="n">zoom</span><span class="o">=</span> <span class="n">zoom</span><span class="p">,</span>
+        <span class="n">size</span><span class="o">=</span> <span class="s">&quot;x&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">size</span><span class="p">)),</span>
+        <span class="n">center</span><span class="o">=</span> <span class="s">&quot;,&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="p">(</span><span class="n">lat</span><span class="p">,</span> <span class="nb">long</span><span class="p">)</span> <span class="p">)),</span>
+        <span class="n">style</span><span class="o">=</span><span class="s">&quot;feature:all|element:labels|visibility:off&quot;</span>
+      <span class="p">)</span>
+    <span class="k">if</span> <span class="n">satellite</span><span class="p">:</span>
+        <span class="n">params</span><span class="p">[</span><span class="s">&quot;maptype&quot;</span><span class="p">]</span><span class="o">=</span><span class="s">&quot;satellite&quot;</span>
+    <span class="k">return</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">base</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span>
+
+
 <div class="viewcode-block" id="Map"><a class="viewcode-back" href="../../index.html#greengraph.map.Map">[docs]</a><span class="k">class</span> <span class="nc">Map</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    The Map class handles the interaction with Google maps and counts the amount of green pixels in a given image.</span>
 <span class="sd">    &#39;&#39;&#39;</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lat</span><span class="p">,</span> <span class="nb">long</span><span class="p">,</span> <span class="n">satellite</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">zoom</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">400</span><span class="p">,</span><span class="mi">400</span><span class="p">),</span> <span class="n">sensor</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
-        <span class="n">base</span><span class="o">=</span><span class="s">&quot;http://maps.googleapis.com/maps/api/staticmap?&quot;</span>
-
-        <span class="n">params</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
-            <span class="n">sensor</span><span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">sensor</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">(),</span>
-            <span class="n">zoom</span><span class="o">=</span> <span class="n">zoom</span><span class="p">,</span>
-            <span class="n">size</span><span class="o">=</span> <span class="s">&quot;x&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">size</span><span class="p">)),</span>
-            <span class="n">center</span><span class="o">=</span> <span class="s">&quot;,&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="p">(</span><span class="n">lat</span><span class="p">,</span> <span class="nb">long</span><span class="p">)</span> <span class="p">)),</span>
-            <span class="n">style</span><span class="o">=</span><span class="s">&quot;feature:all|element:labels|visibility:off&quot;</span>
-          <span class="p">)</span>
-
-        <span class="k">if</span> <span class="n">satellite</span><span class="p">:</span>
-            <span class="n">params</span><span class="p">[</span><span class="s">&quot;maptype&quot;</span><span class="p">]</span><span class="o">=</span><span class="s">&quot;satellite&quot;</span>
-
-        <span class="bp">self</span><span class="o">.</span><span class="n">image</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">base</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span><span class="o">.</span><span class="n">content</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">response</span><span class="o">=</span><span class="n">getMapAt</span><span class="p">(</span><span class="n">lat</span><span class="p">,</span> <span class="nb">long</span><span class="p">,</span> <span class="n">satellite</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">zoom</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">400</span><span class="p">,</span><span class="mi">400</span><span class="p">),</span> <span class="n">sensor</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
         <span class="c"># Fetch our PNG image data</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">pixels</span><span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="n">StringIO</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">image</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">image</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">response</span><span class="o">.</span><span class="n">content</span>
         <span class="c"># Parse our PNG image as a numpy array</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pixels</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="n">StringIO</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">image</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">setDummyImage</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">testImg</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pixels</span><span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pixels</span> <span class="o">=</span> <span class="n">testImg</span>
 
 <div class="viewcode-block" id="Map.green"><a class="viewcode-back" href="../../index.html#greengraph.map.Map.green">[docs]</a>    <span class="k">def</span> <span class="nf">green</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">threshold</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;</span>

@@ -1,0 +1,153 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>greengraph.test.test_getGraph &mdash; Greengraph 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="Greengraph 0.1 documentation" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for greengraph.test.test_getGraph</h1><div class="highlight"><pre>
+<span class="kn">from</span> <span class="nn">nose.tools</span> <span class="kn">import</span> <span class="n">assert_raises</span>
+<span class="kn">from</span> <span class="nn">greengraph.getGraph</span> <span class="kn">import</span> <span class="n">plotGreenDistribution</span>
+
+
+<div class="viewcode-block" id="test_negativeSteps"><a class="viewcode-back" href="../../../index.html#greengraph.test.test_getGraph.test_negativeSteps">[docs]</a><span class="k">def</span> <span class="nf">test_negativeSteps</span><span class="p">():</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Test whether the steps variable is always positive</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">with</span> <span class="n">assert_raises</span><span class="p">(</span><span class="ne">ValueError</span><span class="p">):</span>
+        <span class="k">assert</span> <span class="n">plotGreenDistribution</span><span class="p">(</span><span class="s">&#39;London&#39;</span><span class="p">,</span> <span class="s">&#39;Cambridge&#39;</span><span class="p">,</span> <span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="s">&#39;out.png&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="test_wrongTypeSteps"><a class="viewcode-back" href="../../../index.html#greengraph.test.test_getGraph.test_wrongTypeSteps">[docs]</a><span class="k">def</span> <span class="nf">test_wrongTypeSteps</span><span class="p">():</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Test whether the steps variable is an integer</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">with</span> <span class="n">assert_raises</span><span class="p">(</span><span class="ne">ValueError</span><span class="p">):</span>
+        <span class="k">assert</span> <span class="n">plotGreenDistribution</span><span class="p">(</span><span class="s">&#39;London&#39;</span><span class="p">,</span> <span class="s">&#39;Cambridge&#39;</span><span class="p">,</span> <span class="s">&#39;5&#39;</span><span class="p">,</span> <span class="s">&#39;out.png&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="test_wrongTypeStartPos"><a class="viewcode-back" href="../../../index.html#greengraph.test.test_getGraph.test_wrongTypeStartPos">[docs]</a><span class="k">def</span> <span class="nf">test_wrongTypeStartPos</span><span class="p">():</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Test whether the starting position is a string</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">with</span> <span class="n">assert_raises</span><span class="p">(</span><span class="ne">ValueError</span><span class="p">):</span>
+        <span class="k">assert</span> <span class="n">plotGreenDistribution</span><span class="p">((</span><span class="mf">51.23</span><span class="p">,</span><span class="o">-</span><span class="mf">1.2</span><span class="p">),</span> <span class="s">&#39;Cambridge&#39;</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="s">&#39;out.png&#39;</span><span class="p">)</span></div>
+<div class="viewcode-block" id="test_wrongTypeEndPos"><a class="viewcode-back" href="../../../index.html#greengraph.test.test_getGraph.test_wrongTypeEndPos">[docs]</a><span class="k">def</span> <span class="nf">test_wrongTypeEndPos</span><span class="p">():</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Test whether the ending position is a string</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">with</span> <span class="n">assert_raises</span><span class="p">(</span><span class="ne">ValueError</span><span class="p">):</span>
+        <span class="k">assert</span> <span class="n">plotGreenDistribution</span><span class="p">(</span><span class="s">&#39;Cambridge&#39;</span><span class="p">,(</span><span class="mf">51.23</span><span class="p">,</span><span class="o">-</span><span class="mf">1.2</span><span class="p">),</span> <span class="mi">5</span><span class="p">,</span> <span class="s">&#39;out.png&#39;</span><span class="p">)</span></div>
+<div class="viewcode-block" id="test_wrongTypeOutFile"><a class="viewcode-back" href="../../../index.html#greengraph.test.test_getGraph.test_wrongTypeOutFile">[docs]</a><span class="k">def</span> <span class="nf">test_wrongTypeOutFile</span><span class="p">():</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Test whether the output filename is a string</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">with</span> <span class="n">assert_raises</span><span class="p">(</span><span class="ne">ValueError</span><span class="p">):</span>
+        <span class="k">assert</span> <span class="n">plotGreenDistribution</span><span class="p">(</span><span class="s">&#39;London&#39;</span><span class="p">,</span><span class="s">&#39;Cambridge&#39;</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">555</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="test_emptyStartingPosition"><a class="viewcode-back" href="../../../index.html#greengraph.test.test_getGraph.test_emptyStartingPosition">[docs]</a><span class="k">def</span> <span class="nf">test_emptyStartingPosition</span><span class="p">():</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Test whether the starting position is an empty string</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">with</span> <span class="n">assert_raises</span><span class="p">(</span><span class="ne">ValueError</span><span class="p">):</span>
+        <span class="k">assert</span> <span class="n">plotGreenDistribution</span><span class="p">(</span><span class="s">&#39;&#39;</span><span class="p">,</span> <span class="s">&#39;Cambridge&#39;</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="s">&#39;out.png&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="test_emptyEndingPosition"><a class="viewcode-back" href="../../../index.html#greengraph.test.test_getGraph.test_emptyEndingPosition">[docs]</a><span class="k">def</span> <span class="nf">test_emptyEndingPosition</span><span class="p">():</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Test whether the ending position is an empty string</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">with</span> <span class="n">assert_raises</span><span class="p">(</span><span class="ne">ValueError</span><span class="p">):</span>
+        <span class="k">assert</span> <span class="n">plotGreenDistribution</span><span class="p">(</span><span class="s">&#39;London&#39;</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="s">&#39;out.png&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="test_emptyOutputFilename"><a class="viewcode-back" href="../../../index.html#greengraph.test.test_getGraph.test_emptyOutputFilename">[docs]</a><span class="k">def</span> <span class="nf">test_emptyOutputFilename</span><span class="p">():</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Test whether the filename of the output graph is an empty string</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">with</span> <span class="n">assert_raises</span><span class="p">(</span><span class="ne">ValueError</span><span class="p">):</span>
+        <span class="k">assert</span> <span class="n">plotGreenDistribution</span><span class="p">(</span><span class="s">&#39;London&#39;</span><span class="p">,</span> <span class="s">&#39;Cambridge&#39;</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="test_identicalStartingAndEndingPositions"><a class="viewcode-back" href="../../../index.html#greengraph.test.test_getGraph.test_identicalStartingAndEndingPositions">[docs]</a><span class="k">def</span> <span class="nf">test_identicalStartingAndEndingPositions</span><span class="p">():</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Test whether the starting and ending positions are identical</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">with</span> <span class="n">assert_raises</span><span class="p">(</span><span class="ne">ValueError</span><span class="p">):</span>
+        <span class="k">assert</span> <span class="n">plotGreenDistribution</span><span class="p">(</span><span class="s">&#39;London&#39;</span><span class="p">,</span> <span class="s">&#39;London&#39;</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="s">&#39;out.png&#39;</span><span class="p">)</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2016, Maria Ruxandra Robu.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.7</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

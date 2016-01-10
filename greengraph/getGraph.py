@@ -21,14 +21,23 @@ def plotGreenDistribution(startPos, endPos, steps, outFile):
     # make sure the input parameters are valid
     if not isinstance(steps,int):
         raise ValueError("The steps value: "+ str(steps)+" is not an integer")
+    if not isinstance(startPos,str):
+        raise ValueError("The start position: "+ str(startPos)+" is not a string")
+    if not isinstance(endPos,str):
+        raise ValueError("The end position: "+ str(endPos)+" is not a string")
+    if not isinstance(outFile,str):
+        raise ValueError("The output filename: "+ str(outFile)+" is not a string")
+
     if steps<=0:
         raise ValueError("The steps value: "+ str(steps)+" is non-positive")
+
     if len(startPos)==0:
         raise ValueError("The starting position: "+ startPos+" is empty")
     if len(endPos)==0:
         raise ValueError("The ending position: "+ endPos+" is empty")
     if len(outFile)==0:
         raise ValueError("The output filename: "+ outFile+" is empty")
+
     if startPos == endPos:
         raise ValueError("The start and the end position are the same!")
 

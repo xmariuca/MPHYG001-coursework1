@@ -157,6 +157,93 @@
 </dd></dl>
 
 </div>
+<div class="section" id="module-greengraph.test.test_mapClass">
+<span id="tests"></span><h1>Tests:<a class="headerlink" href="#module-greengraph.test.test_mapClass" title="Permalink to this headline">¶</a></h1>
+<dl class="function">
+<dt id="greengraph.test.test_mapClass.setup_module">
+<code class="descclassname">greengraph.test.test_mapClass.</code><code class="descname">setup_module</code><span class="sig-paren">(</span><em>module</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/greengraph/test/test_mapClass.html#setup_module"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#greengraph.test.test_mapClass.setup_module" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function is the first one to be executed in this module. It creates a synthetic image with no green pixels and saves it in a csv file to be accessed as a fixture in the functions.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="greengraph.test.test_mapClass.teardown_module">
+<code class="descclassname">greengraph.test.test_mapClass.</code><code class="descname">teardown_module</code><span class="sig-paren">(</span><em>module</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/greengraph/test/test_mapClass.html#teardown_module"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#greengraph.test.test_mapClass.teardown_module" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function is called after everything else in this module. Its purpose is to close any connections to the internet or a database. In this case, it deletes the .csv files created in the setup_module() function.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="greengraph.test.test_mapClass.test_countGreen_nonGreenImg">
+<code class="descclassname">greengraph.test.test_mapClass.</code><code class="descname">test_countGreen_nonGreenImg</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/greengraph/test/test_mapClass.html#test_countGreen_nonGreenImg"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#greengraph.test.test_mapClass.test_countGreen_nonGreenImg" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test to count the number of green pixels in a photo with no green areas. The image is read from the fixture .csv file created in the setup_module() function.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="greengraph.test.test_mapClass.test_defaultRequestParam">
+<code class="descclassname">greengraph.test.test_mapClass.</code><code class="descname">test_defaultRequestParam</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/greengraph/test/test_mapClass.html#test_defaultRequestParam"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#greengraph.test.test_mapClass.test_defaultRequestParam" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test function to check that the http get request is called with the right parameters in the default case.</p>
+</dd></dl>
+
+<span class="target" id="module-greengraph.test.test_graphClass"></span><dl class="function">
+<dt id="greengraph.test.test_graphClass.test_geolocate">
+<code class="descclassname">greengraph.test.test_graphClass.</code><code class="descname">test_geolocate</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/greengraph/test/test_graphClass.html#test_geolocate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#greengraph.test.test_graphClass.test_geolocate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the geolocate function in the Greengraph() class. A MagicMock object is created for the geocoder.</p>
+</dd></dl>
+
+<span class="target" id="module-greengraph.test.test_getGraph"></span><dl class="function">
+<dt id="greengraph.test.test_getGraph.test_emptyEndingPosition">
+<code class="descclassname">greengraph.test.test_getGraph.</code><code class="descname">test_emptyEndingPosition</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/greengraph/test/test_getGraph.html#test_emptyEndingPosition"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#greengraph.test.test_getGraph.test_emptyEndingPosition" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test whether the ending position is an empty string</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="greengraph.test.test_getGraph.test_emptyOutputFilename">
+<code class="descclassname">greengraph.test.test_getGraph.</code><code class="descname">test_emptyOutputFilename</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/greengraph/test/test_getGraph.html#test_emptyOutputFilename"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#greengraph.test.test_getGraph.test_emptyOutputFilename" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test whether the filename of the output graph is an empty string</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="greengraph.test.test_getGraph.test_emptyStartingPosition">
+<code class="descclassname">greengraph.test.test_getGraph.</code><code class="descname">test_emptyStartingPosition</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/greengraph/test/test_getGraph.html#test_emptyStartingPosition"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#greengraph.test.test_getGraph.test_emptyStartingPosition" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test whether the starting position is an empty string</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="greengraph.test.test_getGraph.test_identicalStartingAndEndingPositions">
+<code class="descclassname">greengraph.test.test_getGraph.</code><code class="descname">test_identicalStartingAndEndingPositions</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/greengraph/test/test_getGraph.html#test_identicalStartingAndEndingPositions"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#greengraph.test.test_getGraph.test_identicalStartingAndEndingPositions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test whether the starting and ending positions are identical</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="greengraph.test.test_getGraph.test_negativeSteps">
+<code class="descclassname">greengraph.test.test_getGraph.</code><code class="descname">test_negativeSteps</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/greengraph/test/test_getGraph.html#test_negativeSteps"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#greengraph.test.test_getGraph.test_negativeSteps" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test whether the steps variable is always positive</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="greengraph.test.test_getGraph.test_wrongTypeEndPos">
+<code class="descclassname">greengraph.test.test_getGraph.</code><code class="descname">test_wrongTypeEndPos</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/greengraph/test/test_getGraph.html#test_wrongTypeEndPos"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#greengraph.test.test_getGraph.test_wrongTypeEndPos" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test whether the ending position is a string</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="greengraph.test.test_getGraph.test_wrongTypeOutFile">
+<code class="descclassname">greengraph.test.test_getGraph.</code><code class="descname">test_wrongTypeOutFile</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/greengraph/test/test_getGraph.html#test_wrongTypeOutFile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#greengraph.test.test_getGraph.test_wrongTypeOutFile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test whether the output filename is a string</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="greengraph.test.test_getGraph.test_wrongTypeStartPos">
+<code class="descclassname">greengraph.test.test_getGraph.</code><code class="descname">test_wrongTypeStartPos</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/greengraph/test/test_getGraph.html#test_wrongTypeStartPos"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#greengraph.test.test_getGraph.test_wrongTypeStartPos" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test whether the starting position is a string</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="greengraph.test.test_getGraph.test_wrongTypeSteps">
+<code class="descclassname">greengraph.test.test_getGraph.</code><code class="descname">test_wrongTypeSteps</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/greengraph/test/test_getGraph.html#test_wrongTypeSteps"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#greengraph.test.test_getGraph.test_wrongTypeSteps" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test whether the steps variable is an integer</p>
+</dd></dl>
+
+</div>
 
 
           </div>
@@ -168,6 +255,7 @@
   <ul>
 <li><a class="reference internal" href="#">Welcome to Greengraph&#8217;s documentation!</a></li>
 <li><a class="reference internal" href="#contents">Contents:</a></li>
+<li><a class="reference internal" href="#module-greengraph.test.test_mapClass">Tests:</a></li>
 </ul>
 <div class="relations">
 <h3>Related Topics</h3>

@@ -25,3 +25,15 @@ Contents:
 
 
 .. autofunction:: greengraph.commandLine.parseArgs
+
+Tests:
+======
+
+.. automodule:: greengraph.test.test_mapClass
+	:members:
+
+.. automodule:: greengraph.test.test_graphClass
+	:members:
+
+.. automodule:: greengraph.test.test_getGraph
+	:members:

@@ -57,6 +57,9 @@
         <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">        .. method:: Locates the given position on the map</span>
 <span class="sd">        &#39;&#39;&#39;</span>
+        <span class="c"># When exactly_one is False, and there is at least one result, returns a list of geopy.location.Location objects</span>
+        <span class="c"># [0][0] - Address like London,UK</span>
+        <span class="c"># [0][1] - Long and latitude - for London = (51.5073509, -0.1277583)</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">geocoder</span><span class="o">.</span><span class="n">geocode</span><span class="p">(</span><span class="n">place</span><span class="p">,</span> <span class="n">exactly_one</span><span class="o">=</span><span class="bp">False</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span></div>
 
 <div class="viewcode-block" id="Greengraph.location_sequence"><a class="viewcode-back" href="../../index.html#greengraph.graph.Greengraph.location_sequence">[docs]</a>    <span class="k">def</span> <span class="nf">location_sequence</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span><span class="n">end</span><span class="p">,</span><span class="n">steps</span><span class="p">):</span>
@@ -71,6 +74,7 @@
         <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">        .. method:: Counts the green pixels between the two locations</span>
 <span class="sd">        &#39;&#39;&#39;</span>
+        <span class="c"># for each geolocated place, a Map object is created -&gt; which has the associated png image as an attribute -&gt; we call count_green() on its pixels</span>
         <span class="k">return</span> <span class="p">[</span><span class="n">Map</span><span class="p">(</span><span class="o">*</span><span class="n">location</span><span class="p">)</span><span class="o">.</span><span class="n">count_green</span><span class="p">()</span>
                 <span class="k">for</span> <span class="n">location</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">location_sequence</span><span class="p">(</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">geolocate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">start</span><span class="p">),</span>
