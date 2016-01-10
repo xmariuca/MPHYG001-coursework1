@@ -1,0 +1,20 @@
+Fixtures
+========
+
+*** check that for some predefined values, you get some expected values
+*** you can define the context for the tests and specific mocks
+
+http://pythontesting.net/framework/unittest/unittest-fixtures/
+
+Mocks
+=====
+
+*** patch works by (temporarily) changing the object that a name points to with another one
+
+ http://www.voidspace.org.uk/python/mock/patch.html#where-to-patch
+
+ http://alexmarandon.com/articles/python_mock_gotchas/
+
+*** MagicMock
+
+ http://www.voidspace.org.uk/python/mock/magicmock.html

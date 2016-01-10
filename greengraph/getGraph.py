@@ -17,6 +17,21 @@ def plotGreenDistribution(startPos, endPos, steps, outFile):
     :returns: A file with the graph representing the distribution of green pixels.
 
     '''
+
+    # make sure the input parameters are valid
+    if not isinstance(steps,int):
+        raise ValueError("The steps value: "+ str(steps)+" is not an integer")
+    if steps<=0:
+        raise ValueError("The steps value: "+ str(steps)+" is non-positive")
+    if len(startPos)==0:
+        raise ValueError("The starting position: "+ startPos+" is empty")
+    if len(endPos)==0:
+        raise ValueError("The ending position: "+ endPos+" is empty")
+    if len(outFile)==0:
+        raise ValueError("The output filename: "+ outFile+" is empty")
+    if startPos == endPos:
+        raise ValueError("The start and the end position are the same!")
+
     myGraph=Greengraph(startPos,endPos)
     data=myGraph.green_between(steps)
     titleString='Proportion of green pixels between ' + startPos+ ' and ' + endPos

@@ -3,28 +3,34 @@ from StringIO import StringIO
 from matplotlib import image as img
 import requests
 
+def getMapAt(lat, long, satellite=True, zoom=10, size=(400,400), sensor=False):
+    base="http://maps.googleapis.com/maps/api/staticmap?"
+    params=dict(
+        sensor= str(sensor).lower(),
+        zoom= zoom,
+        size= "x".join(map(str, size)),
+        center= ",".join(map(str, (lat, long) )),
+        style="feature:all|element:labels|visibility:off"
+      )
+    if satellite:
+        params["maptype"]="satellite"
+    return requests.get(base, params=params)
+
+
 class Map(object):
     '''
     The Map class handles the interaction with Google maps and counts the amount of green pixels in a given image.
     '''
     def __init__(self, lat, long, satellite=True, zoom=10, size=(400,400), sensor=False):
-        base="http://maps.googleapis.com/maps/api/staticmap?"
-
-        params=dict(
-            sensor= str(sensor).lower(),
-            zoom= zoom,
-            size= "x".join(map(str, size)),
-            center= ",".join(map(str, (lat, long) )),
-            style="feature:all|element:labels|visibility:off"
-          )
-
-        if satellite:
-            params["maptype"]="satellite"
-
-        self.image = requests.get(base, params=params).content
+        self.response=getMapAt(lat, long, satellite=True, zoom=10, size=(400,400), sensor=False)
         # Fetch our PNG image data
-        self.pixels= img.imread(StringIO(self.image))
+        self.image=self.response.content
         # Parse our PNG image as a numpy array
+        self.pixels = img.imread(StringIO(self.image))
+
+    def setDummyImage(self, testImg):
+        self.pixels= None
+        self.pixels = testImg
 
     def green(self, threshold):
         '''
