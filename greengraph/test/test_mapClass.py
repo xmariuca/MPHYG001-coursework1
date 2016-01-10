@@ -86,7 +86,3 @@ def test_countGreen_nonGreenImg():
 #     numGreenPix=mockMap.count_green()
 #     print('green pix = '+ str(numGreenPix))
 
-
-# define fixture with a numpy array of 3 green pixels -> test count_green() test that it works with no green pixels and only green pixels
-
-# test save_green with my fixture

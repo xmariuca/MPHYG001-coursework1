@@ -61,42 +61,30 @@
 %	CODE INCLUSION CONFIGURATION
 %----------------------------------------------------------------------------------------
 %
-%\definecolor{MyDarkGreen}{rgb}{0.0,0.4,0.0} % This is the color used for comments
-%\lstloadlanguages{Perl} % Load Perl syntax for listings, for a list of other languages supported see: ftp://ftp.tex.ac.uk/tex-archive/macros/latex/contrib/listings/listings.pdf
-%\lstset{language=Perl, % Use Perl in this example
-%        frame=single, % Single frame around code
-%        basicstyle=\small\ttfamily, % Use small true type font
-%        keywordstyle=[1]\color{Blue}\bf, % Perl functions bold and blue
-%        keywordstyle=[2]\color{Purple}, % Perl function arguments purple
-%        keywordstyle=[3]\color{Blue}\underbar, % Custom functions underlined and blue
-%        identifierstyle=, % Nothing special about identifiers                                         
-%        commentstyle=\usefont{T1}{pcr}{m}{sl}\color{MyDarkGreen}\small, % Comments small dark green courier font
-%        stringstyle=\color{Purple}, % Strings are purple
-%        showstringspaces=false, % Don't put marks in string spaces
-%        tabsize=5, % 5 spaces per tab
-%        %
-%        % Put standard Perl functions not included in the default language here
-%        morekeywords={rand},
-%        %
-%        % Put Perl function parameters here
-%        morekeywords=[2]{on, off, interp},
-%        %
-%        % Put user defined functions here
-%        morekeywords=[3]{test},
-%       	%
-%        morecomment=[l][\color{Blue}]{...}, % Line continuation (...) like blue comment
-%        numbers=left, % Line numbers on left
-%        firstnumber=1, % Line numbers start with line 1
-%        numberstyle=\tiny\color{Blue}, % Line numbers are blue and small
-%        stepnumber=5 % Line numbers go in steps of 5
-%}
-%
-%% Creates a new command to include a perl script, the first parameter is the filename of the script (without .pl), the second parameter is the caption
-%\newcommand{\perlscript}[2]{
-%\begin{itemize}
-%\item[]\lstinputlisting[caption=#2,label=#1]{#1.pl}
-%\end{itemize}
-%}
+\usepackage{listings}
+\usepackage{color}
+
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+\lstset{frame=tb,
+  language=Python,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  numbers=none,
+  numberstyle=\tiny\color{gray},
+  keywordstyle=\color{blue},
+  commentstyle=\color{dkgreen},
+  stringstyle=\color{mauve},
+  breaklines=true,
+  breakatwhitespace=true,
+  tabsize=3
+}
+
 
 %----------------------------------------------------------------------------------------
 %	DOCUMENT STRUCTURE COMMANDS
@@ -181,6 +169,8 @@
 %\tableofcontents
 \newpage
 
+Greengraph is a Python package that plots the distribution of green pixels found in the maps between two given locations. For a detailed description of the main functions, refer to the documentation files generated with Sphinx. The package can be installed from a git repository and used from the command line or as a library. For more details on the usage, please view the README file. \\
+
 %----------------------------------------------------------------------------------------
 %	PROBLEM 1
 %----------------------------------------------------------------------------------------
@@ -188,11 +178,42 @@
 % To have just one problem per page, simply put a \clearpage after each problem
 
 \begin{homeworkProblem}
-%Listing \ref{homework_example} shows a Perl script.
 
-%\perlscript{homework_example}{Sample Perl Script With Highlighting}
+\textbf{Document the usage of your entry point.}\\
 
-Document the usage of the entry point
+The command line entry point is of the form:
+
+\begin{lstlisting}[language=bash]
+$ getGreenGraph --from startPosition --to endPosition --steps numberSteps --out filenameOutput.ext
+# example of usage
+$ getGreenGraph --from London --to Cambridge --steps 10 --out outGraph.png
+\end{lstlisting}
+
+For more details on how to use the command line and to view the default values for the arguments, try:
+
+\begin{lstlisting}[language=bash]
+$ getGreenGraph --help
+usage: getGreenGraph [-h] [--from STARTPOS] [--to ENDPOS] [--steps STEPS]
+                     [--out OUT]
+
+Greengraph package - Generates a graph with the proportion of green pixels
+between two locations
+
+optional arguments:
+  -h, --help       show this help message and exit
+  --from STARTPOS  Start position, default = London
+  --to ENDPOS      End position, default = Cambridge
+  --steps STEPS    Number of steps between start and end, default = 10
+  --out OUT        Name of output image, default = outGraph.png
+\end{lstlisting}
+
+Similarly, the package can be used as a library in any Python module. Here is an example of a call to get a graph of the distribution of green pixels between two given locations:
+
+\begin{lstlisting}
+greengraph.getGraph.plotGreenDistribution('London', 'Cambridge', 10, 'outGraph.png')
+\end{lstlisting}
+
+For more details, please see the documentation of the code generated with Sphinx. 
 
 \end{homeworkProblem}
 
@@ -203,12 +224,32 @@ Document the usage of the entry point
 
 \begin{homeworkProblem}
 
-Discuss problems encountered in completing the coursework
+\textbf{Discuss problems encountered in completing your work.}\\
 
+Most of the difficulties were encountered in the testing section, in understanding how to use fixtures and mocks and how to apply them to this project.\\
+
+I tried to patch the htttp get request to the internet in the Map() class. In the original code, the return value is used in the constructor to save the image and get the numpy array with the pixels. I could not figure out how to set up the return\_value in such a way that the constructor does not throw an exception when it tries to load the image. So, I created a new function outside of the class (getMapAt()), which returns the response from the request.get. The function is called only from the constructor of the class Map(). In this case, the patch worked and it tests the arguments with which it is called in test\_mapClass.test\_defaultRequestParam().\\
+
+
+On the other hand, creating a mock for the Greengraph() class did not present any problems, since the connection to the internet was established in a method (geolocate(self, place)) and not in the constructor. In this test case (test\_graphClass.test\_geolocate()), a MagicMock() was created for the class member geocoder.\\
+
+
+I encountered another issue when I wanted to test if the method count\_green() from the Map() class works with an image that has no green pixels. When a Map object is created, the image of the current latitude and longitude is set from a connection to Google Maps. I wanted to create a mock for the class, so the constructor does not send the get request. I tried to write a test function with a patch decorator like this:
+
+\begin{lstlisting}
+from mock import patch
+@patch('greengraph.map.Map')
+def getMapMock(mockMap):
+	# patch decorator
+	mockMap.pixels=someTestImage
+    numGreenPix=mockMap.count_green()
+\end{lstlisting}
+
+However, I could not make it work. So, I added the method setDummyImage(self, testImg) to the class Map(). In this way, the count\_green() method was tested for an image with no green pixels. The test image was generated using fixtures. A setup\_module(module) function creates a image with ones on the red and blue channels and zeros on the green one. This image is saved in .csv files and loaded in the necessary test files. A teardown\_module(module) function was also added, which can delete the .csv files after all the functions in the testing module have been run. Normally, these setup\_module and teardown\_module function are used for opening and closing database and internet connections. However, their use was adapted to the Greengraph project in this situation. 
 
 %\problemAnswer{
 %\begin{center}
-%\includegraphics[width=0.75\columnwidth]{example_figure} % Example image
+%%\includegraphics[width=0.75\columnwidth]{example_figure} % Example image
 %\end{center}
 %
 %\lipsum[3-5]
@@ -218,7 +259,25 @@ Discuss problems encountered in completing the coursework
 %----------------------------------------------------------------------------------------
 
 \begin{homeworkProblem}
- Discuss the advantages and costs involved in preparing work for release, the use of package managers like pip and package indexes like PyPI
+
+
+\textbf{Discuss the advantages and costs involved in preparing work for release, the use of package managers like pip and package indexes like PyPI.}\\
+
+Package indexes, like PyPi ease the distribution of code within a community of developers. These packages can be easily managed through the use of pip from the command line. Given these well established distribution tools, most developers would start searching for libraries in there. So, a clear advantage of deploying a package on PyPi would be the increased visibility and the potential greater reach. Furthermore, it makes the installation with the package manager pip easier.\\
+
+\begin{lstlisting}[language=bash]
+# package from a random website
+$ pip install https://myWebsite.com/PythonCode/myPackages/myProject301.tar
+# package from GitHub
+$ pip install git+https://github.com/myUsername/myProject301.git
+# package from PyPi
+$ pip install myProject301
+\end{lstlisting}
+
+
+In order to deploy a package on PyPi, a setup.py file has to be defined. Similarly, files like the README.rst, LICENSE.txt and code documentation are recommended since they make the usage of the code easier. These files are considered best practice for releasing packages that are easy to integrate in any project. Hence, through its extensive use in the Python developers community, the code uploaded on PyPi has a greater chance of being well documented. \\
+
+One of the disadvantages of code distributed through these methods is that the developers have to have some experience with the tools, how to install the packages and if necessary, the correct versions of the dependencies. Consequently, PyPi and pip would not be the ideal choices when packages need to be deployed to end-users (in which case an executable would be needed). 
 
 \end{homeworkProblem}
 
@@ -227,8 +286,14 @@ Discuss problems encountered in completing the coursework
 
 \begin{homeworkProblem}
   
-Discuss further steps you would need to take to build a community of users for a project  
-  
+\textbf{Discuss further steps you would need to take to build a community of users for a project.}\\
+
+One of the most important parts in building a community of users for a project is to document the code thoroughly. This would allow developers to easily install and use the package. Furthermore, it will encourage further development on top of the existing code, if the modules are designed to allow extensions. \\
+
+Another important step would be for the main developers to be active in resolving issues in reasonable time. Maintaining the package up to date is essential in keeping the existing users and make the community stronger. \\
+
+Moreover, the main contributors to the package should be active on websites like Stack Overflow where developers ask questions related to their product. In this way, they can increase their visibility and bring new people in the community.
+
 \end{homeworkProblem}
 
 
