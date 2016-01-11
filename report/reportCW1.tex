@@ -150,7 +150,7 @@
 \vspace{3in}
 }
 
-\author{\textbf{\hmwkAuthorName}}
+\author{\textbf{\hmwkAuthorName  - 14042500}}
 \date{} % Insert date here if you want it to appear below your name
 
 %----------------------------------------------------------------------------------------
@@ -242,7 +242,7 @@ from mock import patch
 def getMapMock(mockMap):
 	# patch decorator
 	mockMap.pixels=someTestImage
-    numGreenPix=mockMap.count_green()
+	numGreenPix=mockMap.count_green()
 \end{lstlisting}
 
 However, I could not make it work. So, I added the method setDummyImage(self, testImg) to the class Map(). In this way, the count\_green() method was tested for an image with no green pixels. The test image was generated using fixtures. A setup\_module(module) function creates a image with ones on the red and blue channels and zeros on the green one. This image is saved in .csv files and loaded in the necessary test files. A teardown\_module(module) function was also added, which can delete the .csv files after all the functions in the testing module have been run. Normally, these setup\_module and teardown\_module function are used for opening and closing database and internet connections. However, their use was adapted to the Greengraph project in this situation. 
